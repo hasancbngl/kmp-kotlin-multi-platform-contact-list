@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.hasancbngl.kmp_kotlin_multi_platform_contact_list.contacts.domain.Contact
 import com.hasancbngl.kmp_kotlin_multi_platform_contact_list.contacts.domain.ContactDataSource
+import com.hasancbngl.kmp_kotlin_multi_platform_contact_list.contacts.domain.ContactValidator.validateContact
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -127,14 +128,45 @@ class ContactListViewModel(
                     phoneNumber = event.value
                 )
             }
+
             is ContactListEvent.OnPhotoPicked -> {
                 newContactHolder = newContactHolder?.copy(
                     photoBytes = event.bytes
                 )
             }
+
             ContactListEvent.SaveContact -> {
-                viewModelScope.launch {
-                    newContactHolder?.let { contactDataSource.insertContact(it) }
+                newContactHolder?.let { contact ->
+                    val result = validateContact(contact)
+                    val errors = listOfNotNull(
+                        result.firstNameError, result.lastNameError, result.emailError,
+                        result.phoneNumberError
+                    )
+                    if (errors.isEmpty()) {
+                        _state.update {
+                            it.copy(
+                                isAddContactSheetOpen = false,
+                                firstNameError = null,
+                                lastNameError = null,
+                                emailError = null,
+                                phoneNumberError = null
+                            )
+                        }
+                        viewModelScope.launch {
+                            contactDataSource.insertContact(contact)
+                            delay(300)
+                            newContactHolder = null
+                        }
+                    } else {
+                        _state.update {
+                            it.copy(
+                                firstNameError = result.firstNameError,
+                                lastNameError = result.lastNameError,
+                                emailError = result.emailError,
+                                phoneNumberError = result.phoneNumberError
+                            )
+                        }
+                    }
                 }
             }
 
@@ -146,6 +178,8 @@ class ContactListViewModel(
                     )
                 }
             }
+
+            else -> Unit
         }
     }
 }
