@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.hasancbngl.kmp_kotlin_multi_platform_contact_list.contacts.domain.Contact
 import com.hasancbngl.kmp_kotlin_multi_platform_contact_list.core.presentation.rememberBitmapFromBytes
+import com.hasancbngl.kmp_kotlin_multi_platform_contact_list.database.ContactsDatabase
 
 @Composable
 fun ContactPhoto(

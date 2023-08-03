@@ -99,6 +99,14 @@ android {
     }
 }
 
+sqldelight{
+    //configure sql
+    database("ContactsDatabase"){
+        packageName ="com.hasancbngl.kmp_kotlin_multi_platform_contact_list.database"
+        sourceFolders = listOf("sqldelight")
+    }
+}
+
 dependencies {
     implementation("androidx.core:core:1.10.1")
     commonMainApi("dev.icerock.moko:mvvm-core:0.16.1")
