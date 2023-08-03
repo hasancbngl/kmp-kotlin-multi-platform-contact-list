@@ -4,7 +4,7 @@ import com.hasancbngl.kmp_kotlin_multi_platform_contact_list.contacts.domain.Con
 
 data class ContactListState(
     val contacts: List<Contact> = emptyList(),
-    val recentlyAddedContact: List<Contact> = emptyList(),
+    val recentlyAddedContacts: List<Contact> = emptyList(),
     val selectedContact: Contact? = null,
     val isAddContactSheetOpen: Boolean = false,
     val isSelectedContactDetailSheetOpen: Boolean = false,
