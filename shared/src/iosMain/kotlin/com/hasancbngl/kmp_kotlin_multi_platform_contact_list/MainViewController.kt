@@ -1,7 +1,7 @@
 package com.hasancbngl.kmp_kotlin_multi_platform_contact_list
 
-import androidx.compose.ui.interop.LocalUIViewController
 import androidx.compose.ui.window.ComposeUIViewController
+import com.hasancbngl.kmp_kotlin_multi_platform_contact_list.di.AppModule
 
 //run only in ios
 fun MainViewController() = ComposeUIViewController {
@@ -11,5 +11,6 @@ fun MainViewController() = ComposeUIViewController {
     App(
         darkTheme = isDarkTheme,
         dynamicColor = false,
+        appModule = AppModule()
     )
 }
