@@ -23,7 +23,7 @@ fun AddContactImageComposable(onClick: () -> Unit) {
             .clip(RoundedCornerShape(40))
             .background(MaterialTheme.colorScheme.secondaryContainer)
             .clickable {
-                onClick
+                onClick()
             }
             .border(
                 width = 1.dp,

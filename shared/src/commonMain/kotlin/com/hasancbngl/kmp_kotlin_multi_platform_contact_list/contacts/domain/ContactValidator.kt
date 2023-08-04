@@ -21,8 +21,8 @@ object ContactValidator {
             result = result.copy(emailError = "This is not a valid email.")
         }
 
-        if (contact.phoneNumber.isBlank()) {
-            result = result.copy(phoneNumberError = "The phone number can't be empty.")
+        if (contact.phoneNumber.isBlank() || contact.phoneNumber.toDoubleOrNull() == null) {
+            result = result.copy(phoneNumberError = "This is not a valid phone number.")
         }
         return result
     }
