@@ -23,7 +23,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.hasancbngl.kmp_kotlin_multi_platform_contact_list.contacts.domain.Contact
 import com.hasancbngl.kmp_kotlin_multi_platform_contact_list.contacts.presentation.components.AddContactSheet
+import com.hasancbngl.kmp_kotlin_multi_platform_contact_list.contacts.presentation.components.ContactDetailSheet
 import com.hasancbngl.kmp_kotlin_multi_platform_contact_list.contacts.presentation.components.ContactListItem
+import com.hasancbngl.kmp_kotlin_multi_platform_contact_list.contacts.presentation.components.RecentlyAddedContacts
 import com.hasancbngl.kmp_kotlin_multi_platform_contact_list.core.presentation.ImagePicker
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,6 +61,14 @@ fun ContactListScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             item {
+                RecentlyAddedContacts(contacts = state.recentlyAddedContacts,
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = {
+                        onEvent(ContactListEvent.SelectContact(it))
+                    })
+            }
+
+            item {
                 Text(
                     "My contacts (${state.contacts.size})",
                     modifier = Modifier.fillMaxWidth()
@@ -73,10 +83,15 @@ fun ContactListScreen(
             }
         }
     }
+    ContactDetailSheet(
+        isOpen = state.isSelectedContactDetailSheetOpen,
+        selectedContact = state.selectedContact,
+        onEvent = onEvent
+    )
     AddContactSheet(
         state = state,
         newContact = newContact,
-        onEvent = { event->
+        onEvent = { event ->
             if (event is ContactListEvent.OnAddPhotoClicked) imagePicker.pickImage()
             onEvent(event)
         },
