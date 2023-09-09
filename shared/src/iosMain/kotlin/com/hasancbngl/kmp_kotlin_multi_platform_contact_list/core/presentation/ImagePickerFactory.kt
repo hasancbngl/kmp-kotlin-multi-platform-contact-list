@@ -2,6 +2,7 @@ package com.hasancbngl.kmp_kotlin_multi_platform_contact_list.core.presentation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import platform.UIKit.UIViewController
 
 actual class ImagePickerFactory(
     private val rootController: UIViewController

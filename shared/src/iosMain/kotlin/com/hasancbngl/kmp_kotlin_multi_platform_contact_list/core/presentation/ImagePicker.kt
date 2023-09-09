@@ -1,6 +1,16 @@
 package com.hasancbngl.kmp_kotlin_multi_platform_contact_list.core.presentation
 
 import androidx.compose.runtime.Composable
+import kotlinx.cinterop.refTo
+import platform.UIKit.UIImage
+import platform.UIKit.UIImageJPEGRepresentation
+import platform.UIKit.UIImagePickerController
+import platform.UIKit.UIImagePickerControllerDelegateProtocol
+import platform.UIKit.UIImagePickerControllerSourceType
+import platform.UIKit.UINavigationControllerDelegateProtocol
+import platform.UIKit.UIViewController
+import platform.darwin.NSObject
+import platform.posix.memcpy
 
 actual class ImagePicker(
     private val rootController: UIViewController
@@ -38,6 +48,7 @@ actual class ImagePicker(
     actual fun registerPicker(onImagePicked: (ByteArray) -> Unit) {
         this.onImagePicked = onImagePicked
     }
+
     actual fun pickImage() {
         rootController.presentViewController(imagePickerController, true) {
             imagePickerController.delegate = delegate
